@@ -1,2 +1,3 @@
 # casestudyAKPsi
-Software Engineering and Product Design Case study for akpsi.
+Software Engineering and Product Design Case study for AKPsi.
+
