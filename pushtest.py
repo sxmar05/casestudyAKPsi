@@ -1,1 +1,0 @@
-print("ALL HAIL QUEEN LIAISON")
