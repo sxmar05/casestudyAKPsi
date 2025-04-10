@@ -1,76 +1,176 @@
 // profile.js
-import React from "react";
+import React from 'react';
 import { Link } from 'react-router-dom';
-import "../styles/profile.css";
-import { Card } from "../components/ui/card";
-import { Button } from "../components/ui/button";
+import '../styles/profile.css';
 
-export default function Profile() {
+function Profile() {
+  const currentDate = new Date();
+  const options = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
+  const formattedDate = currentDate.toLocaleDateString('en-US', options);
+
   return (
     <div className="profile-container">
-      <header className="profile-header">
-        <div className="logo">📍 nomad</div>
-        <div className="user-greeting">Hi User!</div>
+      {/* Header */}
+      <header className="header">
+        <div className="logo-section">
+          <img src="/logo.png" alt="nomad" className="logo" />
+          <span className="logo-text">nomad</span>
+        </div>
+        <div className="header-right">
+          <div className="user-greeting">Hi User!</div>
+          <Link to="/" className="logout-button">Log Out</Link>
+        </div>
       </header>
 
-      <main className="profile-main">
-        <section className="welcome-section">
-          <h1>Welcome, User</h1>
-          <p>Monday, 07 April 2025</p>
-        </section>
+      {/* Main Content */}
+      <main className="main-content">
+        <h1 className="welcome-text">Welcome, User</h1>
+        <p className="date">{formattedDate}</p>
 
-        <Card className="profile-card">
-          <div className="user-info">
-            <img
-              src="https://via.placeholder.com/100"
-              alt="User Avatar"
-              className="avatar"
-            />
-            <div>
-              <h2>User Name</h2>
-              <p>username@gmail.com</p>
-              <p className="email-date">1 month ago</p>
-              <Button variant="outline">+ Add Email Address</Button>
+        {/* User Info Section */}
+        <div className="user-info-section">
+          <div className="user-header">
+            <div className="user-profile">
+              <img src="/profile-placeholder.png" alt="Profile" className="profile-image" />
+              <div className="user-details">
+                <h2>User Name</h2>
+                <p>username@gmail.com</p>
+              </div>
+            </div>
+            <button className="edit-button">Edit</button>
+          </div>
+
+          {/* Form Grid */}
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Full Name</label>
+              <input type="text" placeholder="Your Full Name" />
+            </div>
+            <div className="form-group">
+              <label>Location</label>
+              <input type="text" placeholder="Your Primary Residence Address" />
+            </div>
+            <div className="form-group">
+              <label>Gender</label>
+              <select>
+                <option value="">Your First Name</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Country</label>
+              <select>
+                <option value="">Country Location</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Language</label>
+              <select>
+                <option value="">Your First Name</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Time Zone</label>
+              <select>
+                <option value="">Time Zone</option>
+              </select>
             </div>
           </div>
 
-          <form className="profile-form">
-            <div className="input-group">
-              <input placeholder="Your Full Name" />
-              <input placeholder="Your Primary Residence Address" />
+          {/* Email Section */}
+          <div className="email-section">
+            <h3>My email Address</h3>
+            <div className="email-item">
+              <div className="email-icon">📧</div>
+              <div className="email-details">
+                <p>username@gmail.com</p>
+                <span>1 month ago</span>
+              </div>
             </div>
-            <div className="input-group">
-              <select><option>Your Gender</option></select>
-              <select><option>Country Location</option></select>
-            </div>
-            <div className="input-group">
-              <select><option>Language</option></select>
-              <select><option>Time Zone</option></select>
-            </div>
-            <Button className="edit-button">Edit</Button>
-          </form>
-        </Card>
+            <button className="add-email-button">+Add Email Address</button>
+          </div>
 
-        <Card className="questionnaire-card">
-          <h2>Questionnaire Data</h2>
-          <form className="questionnaire-form">
-            <div className="grid">
-              <select><option>10-30 Mins</option></select>
-              <select><option>No Preference</option></select>
-              <select><option>Cafe</option></select>
-              <select><option>No Food</option></select>
-              <select><option>Silence</option></select>
-              <select><option>Conference Room</option></select>
-              <select><option>semi-private</option></select>
-              <select><option>Meetings, Calls</option></select>
-              <select><option>wifi, printer</option></select>
-              <select><option>6AM-3PM</option></select>
-              <select><option>IT Services</option></select>
-              <select><option>Mon-Fri</option></select>
+          {/* Questionnaire Section */}
+          <div className="questionnaire-section">
+            <h2>Questionnaire Data</h2>
+            <div className="form-grid">
+              <div className="form-group">
+                <label>Commute time</label>
+                <select>
+                  <option value="">10-30 Mins</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Price</label>
+                <select>
+                  <option value="">No Preference</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Preferred Workspace</label>
+                <select>
+                  <option value="">Cafe</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Food Options</label>
+                <select>
+                  <option value="">No Food</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Noise Level</label>
+                <select>
+                  <option value="">Silence</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Size</label>
+                <select>
+                  <option value="">Conference Room</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Privacy</label>
+                <select>
+                  <option value="">semi-private</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>My Work Involves</label>
+                <select>
+                  <option value="">Meetings, Calls</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Amenities</label>
+                <select>
+                  <option value="">wifi, printer</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Work Hours</label>
+                <select>
+                  <option value="">6AM-3PM</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Industry</label>
+                <select>
+                  <option value="">IT Services</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Work Days</label>
+                <select>
+                  <option value="">Mon-Fri</option>
+                </select>
+              </div>
             </div>
-          </form>
-        </Card>
+          </div>
+        </div>
       </main>
     </div>
   );
 }
+
+export default Profile;
