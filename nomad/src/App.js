@@ -6,6 +6,7 @@ import { auth } from "./firebase/firebase";
 import Home from "./Home";
 import FirebaseTestPage from "./pages/FirebaseTestPage";
 import AuthForm from "./components/Auth/AuthForm";
+import Quiz from "./pages/Quiz";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -42,6 +43,10 @@ function App() {
         <Route
           path="/firebase"
           element={user ? <FirebaseTestPage /> : <Navigate to="/auth" replace />}
+        />
+        <Route
+          path="/quiz"
+          element={user ? <Quiz /> : <Navigate to="/auth" replace />}
         />
       </Routes>
     </Router>
