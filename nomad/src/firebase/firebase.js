@@ -4,16 +4,15 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-// Replace with your actual config from Firebase Console
 const firebaseConfig = {
-    apiKey: "AIzaSyCKb5qtit2r2UjilC6qnsRPQ8dRgGz9jsk",
-    authDomain: "nomad-f4ad6.firebaseapp.com",
-    projectId: "nomad-f4ad6",
-    storageBucket: "nomad-f4ad6.firebasestorage.app",
-    messagingSenderId: "833504780898",
-    appId: "1:833504780898:web:b03bd6f8295bb5b0b5673b",
-    measurementId: "G-TGF4V70L0Q"
-  };
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
+};
 
 const app = initializeApp(firebaseConfig);
 
