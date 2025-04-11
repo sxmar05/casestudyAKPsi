@@ -46,12 +46,17 @@ function Locator() {
     <div className="locator-container">
       {/* Header */}
       <header className="header">
-        <div className="logo-section">
-          <img src="/logo.png" alt="nomad" className="logo" />
-          <span className="logo-text">nomad</span>
-        </div>
-        <div className="user-greeting">Hi User!</div>
-      </header>
+                <div className="logo-section">
+                  <Link to="/locator" className="logo" style={{ textDecoration: 'none' }}>
+                <img src="/logo.png" alt="nomad" className="logo" />
+                <span className="logo-text">nomad</span>
+                  </Link>
+                </div>
+                <div className="header-right">
+                  
+                  <Link to="/profile" className="user-greeting">Hi User!</Link>
+                </div>
+              </header>
 
       <div className="locator-content">
         {/* Search Section */}
@@ -94,16 +99,7 @@ function Locator() {
                 zoomControl: true
               }}
             >
-              {locations.map((location, index) => (
-                <Marker
-                  key={index}
-                  position={location}
-                  icon={{
-                    url: '/workspace-marker.svg',
-                    scaledSize: { width: 40, height: 40 }
-                  }}
-                />
-              ))}
+              {/* Markers removed */}
             </GoogleMap>
           </LoadScript>
         </div>

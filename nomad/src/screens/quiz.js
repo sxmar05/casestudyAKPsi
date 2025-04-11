@@ -5,16 +5,18 @@ import '../styles/quiz.css';
 export default function Quiz() {
   return (
     <div className="quiz-container">
-      <header className="quiz-header">
-        <div className="header-left">
-          <div className="menu-icon">☰</div>
-          <div className="logo">
-            <img src="/logo.png" alt="nomad logo" />
-            <span className="logo-text">nomad</span>
-          </div>
-        </div>
-        <div className="user-greeting">Hi User!</div>
-      </header>
+      <header className="header">
+                      <div className="logo-section">
+                        <Link to="/locator" className="logo" style={{ textDecoration: 'none' }}>
+                      <img src="/logo.png" alt="nomad" className="logo" />
+                      <span className="logo-text">nomad</span>
+                        </Link>
+                      </div>
+                      <div className="header-right">
+                        
+                        <Link to="/profile" className="user-greeting">Hi User!</Link>
+                      </div>
+                    </header>
 
       <main className="quiz-main">
         <div className="quiz-content">
@@ -164,9 +166,9 @@ export default function Quiz() {
             </div>
 
             <div className="navigation-buttons">
-              <button className="nav-button submit-button">
-                submit →
-              </button>
+              
+             <Link to="/locator" className="nav-button submit-button">submit →</Link>
+              
             </div>
           </div>
         </div>
