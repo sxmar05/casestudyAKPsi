@@ -7,8 +7,6 @@ const Home = () => (
     <h1> Home Page</h1>
     <p>Test Firebase stuff here:</p>
     <Link to="/firebase">Go to Firebase Page</Link>
-    <br />
-    <Link to="/places">Find Workspaces</Link>
   </div>
 );
 

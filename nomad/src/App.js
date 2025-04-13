@@ -5,9 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase";
 import Home from "./Home";
 import FirebaseTestPage from "./pages/FirebaseTestPage";
-import PlacesPage from "./pages/PlacesPage";
 import AuthForm from "./components/Auth/AuthForm";
-import PlacesResults from './components/Places/PlacesResults';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -45,11 +43,6 @@ function App() {
           path="/firebase"
           element={user ? <FirebaseTestPage /> : <Navigate to="/auth" />}
         />
-        <Route
-          path="/places"
-          element={user ? <PlacesPage /> : <Navigate to="/auth" />}
-        />
-        <Route path="/places/results" element={<PlacesResults />} />
       </Routes>
     </Router>
   );
