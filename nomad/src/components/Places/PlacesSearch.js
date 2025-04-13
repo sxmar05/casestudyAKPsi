@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const PlacesSearch = () => {
@@ -7,9 +7,6 @@ const PlacesSearch = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [predictions, setPredictions] = useState([]);
-  const inputRef = useRef(null);
-  const serviceRef = useRef(null);
   const [preferences, setPreferences] = useState({
     commuteTime: 30,
     workspaceTypes: ['office_space', 'library', 'cafe', 'other'],
@@ -22,242 +19,17 @@ const PlacesSearch = () => {
   });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-    
-    if (!apiKey) {
-      console.error('Google Maps API key is missing');
-      setError('Google Maps API key is not configured. Please check your .env file.');
-      return;
-    }
-
-    // Check if script is already loaded
-    if (window.google && window.google.maps && window.google.maps.places) {
-      initializeService();
-      return;
-    }
-
-    // Check if script is already being loaded
-    const existingScript = document.querySelector('script[src*="maps.googleapis.com"]');
-    if (existingScript) {
-      // If script is still loading, wait for it
-      existingScript.onload = () => {
-        initializeService();
-      };
-      return;
-    }
-
-    setIsLoading(true);
-    setError(null);
-
-    // Load Google Places API script
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&loading=async`;
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-      setIsLoading(false);
-      initializeService();
-    };
-    script.onerror = (error) => {
-      setIsLoading(false);
-      setError('Failed to load Google Maps API. Please check your API key and internet connection.');
-    };
-    document.head.appendChild(script);
-
-    return () => {
-      serviceRef.current = null;
-    };
-  }, []);
-
-  const initializeService = () => {
-    if (!window.google || !window.google.maps || !window.google.maps.places) {
-      setError('Google Places API not loaded');
-      return;
-    }
-
-    try {
-      if (!serviceRef.current) {
-        serviceRef.current = new window.google.maps.places.AutocompleteService();
-      }
-    } catch (error) {
-      console.error('Error initializing AutocompleteService:', error);
-      setError('Failed to initialize search service. Please try refreshing the page.');
-    }
-  };
-
   const handleInputChange = (e) => {
-    const value = e.target.value;
-    setSearchInput(value);
-    setError(null);
-
-    if (value.length > 0 && serviceRef.current) {
-      const request = {
-        input: value,
-        types: ['address'],
-        componentRestrictions: { country: 'us' }
-      };
-
-      serviceRef.current.getPlacePredictions(request, (predictions, status) => {
-        if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-          setPredictions(predictions);
-        } else {
-          setPredictions([]);
-        }
-      });
-    } else {
-      setPredictions([]);
-    }
+    setSearchInput(e.target.value);
   };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      if (predictions.length > 0) {
-        handlePlaceSelect(predictions[0].place_id);
-      } else if (searchInput.length > 0) {
+      if (searchInput.length > 0) {
         setShowPreferences(true);
         setSelectedLocation({ geometry: { location: { lat: 0, lng: 0 } } });
       }
-    }
-  };
-
-  const handlePlaceSelect = async (placeId) => {
-    try {
-      const geocoder = new window.google.maps.Geocoder();
-      const place = await new Promise((resolve, reject) => {
-        geocoder.geocode({ placeId }, (results, status) => {
-          if (status === window.google.maps.GeocoderStatus.OK) {
-            resolve(results[0]);
-          } else {
-            reject(status);
-          }
-        });
-      });
-
-      setSelectedLocation(place);
-      setShowPreferences(true);
-      setError(null);
-      setPredictions([]);
-      setSearchInput(place.formatted_address);
-    } catch (error) {
-      console.error('Error getting place details:', error);
-      setError('Failed to get place details. Please try again.');
-    }
-  };
-
-  const searchNearbyPlaces = async (location) => {
-    if (!window.google || !window.google.maps || !window.google.maps.places) {
-      setError('Google Places API not loaded. Please try refreshing the page.');
-      return;
-    }
-
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const map = new window.google.maps.Map(document.createElement('div'));
-      const service = new window.google.maps.places.PlacesService(map);
-      
-      // Convert commute time to meters (assuming 1 minute = 100 meters)
-      const radius = preferences.commuteTime * 100;
-      
-      console.log('Searching with location:', location);
-      console.log('Search radius:', radius);
-      console.log('Preferences:', preferences);
-      
-      // Create a list of place types based on selected workspace types
-      const placeTypes = preferences.workspaceTypes.map(type => {
-        switch(type) {
-          case 'office_space': return 'coworking_space';
-          case 'cafe': return 'cafe';
-          case 'library': return 'library';
-          default: return null;
-        }
-      }).filter(Boolean);
-
-      console.log('Place types to search:', placeTypes);
-
-      const request = {
-        location: location,
-        radius: radius.toString(),
-        type: placeTypes,
-        keyword: 'workspace'
-      };
-
-      console.log('Search request:', request);
-
-      service.nearbySearch(request, (results, status) => {
-        console.log('Search results:', results);
-        console.log('Search status:', status);
-        
-        setIsLoading(false);
-        
-        if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-          const filteredPlaces = results.filter(place => {
-            // Filter by price type
-            if (preferences.priceTypes.length > 0 && !preferences.priceTypes.includes('no_preference')) {
-              const isPaid = place.price_level && place.price_level > 0;
-              const isFree = !place.price_level || place.price_level === 0;
-              
-              if (preferences.priceTypes.includes('paid') && !isPaid) return false;
-              if (preferences.priceTypes.includes('free') && !isFree) return false;
-            }
-
-            // Filter by food options if required
-            if (preferences.foodOptions === 'yes') {
-              if (!place.types.includes('cafe')) return false;
-            }
-
-            return true;
-          });
-
-          console.log('Filtered places:', filteredPlaces);
-
-          if (filteredPlaces.length === 0) {
-            setError('No workspaces found matching your criteria. Try adjusting your preferences.');
-            return;
-          }
-
-          // Get detailed information for each place
-          const placesWithDetails = filteredPlaces.map(place => {
-            return new Promise((resolve) => {
-              service.getDetails(
-                { 
-                  placeId: place.place_id,
-                  fields: ['name', 'formatted_address', 'rating', 'price_level', 'opening_hours', 'website', 'photos', 'types']
-                }, 
-                (result, status) => {
-                  if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-                    resolve(result);
-                  } else {
-                    console.error('Error getting place details:', status);
-                    resolve(place);
-                  }
-                }
-              );
-            });
-          });
-
-          Promise.all(placesWithDetails).then(places => {
-            console.log('Final places with details:', places);
-            // Navigate to results page with the filtered places
-            navigate('/places/results', { 
-              state: { 
-                places,
-                preferences
-              }
-            });
-          });
-        } else {
-          console.error('Search failed with status:', status);
-          setError('Failed to search for workspaces. Please try again later.');
-        }
-      });
-    } catch (error) {
-      setIsLoading(false);
-      console.error('Error in searchNearbyPlaces:', error);
-      setError('An error occurred while searching for workspaces. Please try again.');
     }
   };
 
@@ -271,7 +43,12 @@ const PlacesSearch = () => {
   const handleSearch = () => {
     if (selectedLocation && selectedLocation.geometry) {
       console.log('Selected location:', selectedLocation);
-      searchNearbyPlaces(selectedLocation.geometry.location);
+      navigate('/places/results', { 
+        state: { 
+          places: [],
+          preferences
+        }
+      });
     } else {
       console.error('No valid location selected');
       setError('Please select a valid location first');
@@ -284,32 +61,15 @@ const PlacesSearch = () => {
         <h2 className="text-xl font-semibold mb-4">What is your current address?</h2>
         <div className="relative">
           <input
-            ref={inputRef}
             type="text"
             value={searchInput}
-            onChange={(e) => {
-              console.log('Input changed:', e.target.value);
-              setSearchInput(e.target.value);
-            }}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
             placeholder="Enter your address..."
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             disabled={isLoading}
             autoComplete="off"
-            style={{ zIndex: 1 }}
           />
-          {predictions.length > 0 && (
-            <div className="absolute z-10 w-full mt-1 bg-white border rounded-lg shadow-lg">
-              {predictions.map((prediction) => (
-                <div
-                  key={prediction.place_id}
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => handlePlaceSelect(prediction.place_id)}
-                >
-                  {prediction.description}
-                </div>
-              ))}
-            </div>
-          )}
         </div>
         {error && (
           <p className="mt-2 text-red-500 text-sm">{error}</p>
