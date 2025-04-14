@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import { db, auth } from '../firebase/firebase';
+import {
+  doc,
+  setDoc,
+  deleteDoc,
+  getDocs,
+  collection,
+  query,
+  where,
+} from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyB_giVz4GeO3xEQ5bt4PAG8DCFtjaTFORI';
 
 const PlacesPage = () => {
-  // Remove Firebase dependencies
   const [places, setPlaces] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [mapsLoaded, setMapsLoaded] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false); // Track if form has been submitted
-  
-  // Form state for manual preferences
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+
   const [formData, setFormData] = useState({
     currentAddress: '',
     maxCommuteTime: 30,
@@ -63,6 +74,48 @@ const PlacesPage = () => {
       setMapsLoaded(false);
     };
   }, []);
+
+  // Replace the static userId with currentUser?.uid
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const loadFavorites = async () => {
+      if (!currentUser) return;
+      
+      const q = query(collection(db, "favorites"), where("userId", "==", currentUser.uid));
+      const querySnapshot = await getDocs(q);
+      const favoriteIds = querySnapshot.docs.map(doc => doc.data().placeId);
+      setFavorites(favoriteIds);
+    };
+
+    loadFavorites();
+  }, [currentUser]);
+
+  const toggleFavorite = async (place) => {
+    if (!currentUser) return;
+    
+    const docRef = doc(db, "favorites", `${currentUser.uid}_${place.place_id}`);
+
+    if (favorites.includes(place.place_id)) {
+      await deleteDoc(docRef);
+      setFavorites((prev) => prev.filter((id) => id !== place.place_id));
+    } else {
+      await setDoc(docRef, {
+        userId: currentUser.uid,
+        placeId: place.place_id,
+        name: place.name,
+        address: place.vicinity,
+        timestamp: new Date(),
+      });
+      setFavorites((prev) => [...prev, place.place_id]);
+    }
+  };
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -673,6 +726,19 @@ const PlacesPage = () => {
                         </div>
                       </div>
                     )}
+                    {/* Favorite Button */}
+                    <button
+                      onClick={() => toggleFavorite(place)}
+                      className={`mt-3 text-sm font-medium rounded px-3 py-1 ${
+                        favorites.includes(place.place_id)
+                          ? 'bg-yellow-300 text-yellow-900'
+                          : 'bg-gray-200 text-gray-700'
+                      }`}
+                    >
+                      {favorites.includes(place.place_id)
+                        ? '★ Favorited'
+                        : '☆ Add to Favorites'}
+                    </button>
                   </div>
                 </div>
               ))}

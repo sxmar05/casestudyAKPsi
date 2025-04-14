@@ -6,6 +6,7 @@ import { auth } from "./firebase/firebase";
 import Home from "./Home";
 import FirebaseTestPage from "./pages/FirebaseTestPage";
 import PlacesPage from "./pages/PlacesPage";
+import ProfilePage from "./pages/ProfilePage";
 import AuthForm from "./components/Auth/AuthForm";
 import PlacesResults from './components/Places/PlacesResults';
 
@@ -48,6 +49,10 @@ function App() {
         <Route
           path="/places"
           element={user ? <PlacesPage /> : <Navigate to="/auth" />}
+        />
+        <Route
+          path="/profile"
+          element={user ? <ProfilePage /> : <Navigate to="/auth" />}
         />
         <Route path="/places/results" element={<PlacesResults />} />
       </Routes>
