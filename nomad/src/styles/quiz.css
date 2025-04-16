@@ -1,0 +1,168 @@
+/* Quiz.css */
+.quiz-container {
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #f0f4ff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menu-icon {
+  color: #003366;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo img {
+  width: 32px;
+  height: 32px;
+}
+
+.logo-text {
+  color: #003366;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.user-greeting {
+  color: #003366;
+  font-weight: 600;
+}
+
+.quiz-main {
+  min-height: calc(100vh - 64px);
+  background-color: #f8faff;
+}
+
+.quiz-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.quiz-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.quiz-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 3rem;
+}
+
+.question-container {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.question {
+  margin-bottom: 2rem;
+}
+
+.question-text {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.select-wrapper {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.select-wrapper select {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 1rem;
+  color: #666;
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #666;
+  pointer-events: none;
+}
+
+.input-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 1rem;
+  color: #666;
+}
+
+.input-wrapper input::placeholder {
+  color: #999;
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: #4285f4;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.nav-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  background-color: #4285f4;
+  color: white;
+}
+
+.nav-button:hover {
+  opacity: 0.9;
+}

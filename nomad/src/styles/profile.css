@@ -1,0 +1,217 @@
+/* profile.css */
+
+.profile-container {
+  min-height: 100vh;
+  background-color: #f5f8ff;
+}
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #e6f0ff;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.logo-text {
+  color: #003366;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.user-greeting {
+  color: #003366;
+  font-weight: bold;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logout-button {
+  background-color: #ff4444;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.logout-button:hover {
+  background-color: #cc0000;
+}
+
+/* Main Content Styles */
+.main-content {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.welcome-text {
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.date {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+/* User Info Section */
+.user-info-section {
+  background-color: white;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-details h2 {
+  margin: 0;
+  color: #333;
+}
+
+.user-details p {
+  margin: 0;
+  color: #666;
+}
+
+.edit-button {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Form Grid Styles */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Email Section Styles */
+.email-section {
+  margin-bottom: 2rem;
+}
+
+.email-section h3 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.email-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.email-icon {
+  font-size: 1.5rem;
+}
+
+.email-details p {
+  margin: 0;
+  color: #333;
+}
+
+.email-details span {
+  color: #666;
+  font-size: 0.8rem;
+}
+
+.add-email-button {
+  background-color: #f0f4ff;
+  color: #4285f4;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* Questionnaire Section Styles */
+.questionnaire-section h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    padding: 1rem;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+
+  .user-info-section {
+    padding: 1rem;
+  }
+}

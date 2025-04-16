@@ -3,12 +3,19 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase";
+import './App.css';
+
+// Import all components
 import Home from "./Home";
 import FirebaseTestPage from "./pages/FirebaseTestPage";
 import PlacesPage from "./pages/PlacesPage";
 import ProfilePage from "./pages/ProfilePage";
 import AuthForm from "./components/Auth/AuthForm";
 import PlacesResults from './components/Places/PlacesResults';
+import Landing from './screens/landing';
+import Locator from './screens/locator';
+import Profile from './screens/profile';
+import Quiz from './screens/quiz';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -33,29 +40,22 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={user ? <Home /> : <Navigate to="/auth" />}
-        />
-        <Route
-          path="/auth"
-          element={!user ? <AuthForm /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/firebase"
-          element={user ? <FirebaseTestPage /> : <Navigate to="/auth" />}
-        />
-        <Route
-          path="/places"
-          element={user ? <PlacesPage /> : <Navigate to="/auth" />}
-        />
-        <Route
-          path="/profile"
-          element={user ? <ProfilePage /> : <Navigate to="/auth" />}
-        />
-        <Route path="/places/results" element={<PlacesResults />} />
-      </Routes>
+      <div className="App">
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={<Landing />} />
+          <Route path="/auth" element={!user ? <AuthForm /> : <Navigate to="/home" />} />
+          
+          {/* Protected routes */}
+          <Route path="/home" element={user ? <Home /> : <Navigate to="/auth" />} />
+          <Route path="/firebase" element={user ? <FirebaseTestPage /> : <Navigate to="/auth" />} />
+          <Route path="/places" element={user ? <PlacesPage /> : <Navigate to="/auth" />} />
+          <Route path="/places/results" element={user ? <PlacesResults /> : <Navigate to="/auth" />} />
+          <Route path="/profile" element={user ? <ProfilePage /> : <Navigate to="/auth" />} />
+          <Route path="/locator" element={user ? <Locator /> : <Navigate to="/auth" />} />
+          <Route path="/quiz" element={user ? <Quiz /> : <Navigate to="/auth" />} />
+        </Routes>
+      </div>
     </Router>
   );
 }
