@@ -109,9 +109,6 @@ const ProfilePage = () => {
                   <div className="p-6">
                     <h4 className="text-lg font-medium text-gray-900">{favorite.name}</h4>
                     <p className="mt-1 text-sm text-gray-500">{favorite.address}</p>
-                    <p className="mt-2 text-sm text-gray-500">
-                      Added on: {new Date(favorite.timestamp).toLocaleDateString()}
-                    </p>
                   </div>
                 </div>
               ))}

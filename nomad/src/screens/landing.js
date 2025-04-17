@@ -1,9 +1,49 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/landing.css';
 import arrowImage from '../assets/arrow.png';
+import { register, login, signInWithGoogle } from '../firebase/authService';
 
 function Landing() {
+  const [isLogin, setIsLogin] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [error, setError] = useState('');
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    
+    if (!isLogin && !termsAccepted) {
+      setError('Please accept the terms & policy');
+      return;
+    }
+    
+    try {
+      if (isLogin) {
+        await login(email, password);
+        navigate('/home');
+      } else {
+        await register(email, password);
+        navigate('/home');
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+      navigate('/home');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <div className="landing-container">
       {/* Header */}
@@ -17,7 +57,7 @@ function Landing() {
       {/* Hero Section */}
       <section className="hero-section">
         <h1>Where will you work today?</h1>
-        <Link to="/quiz" className="find-place-button">
+        <Link to="/home" className="find-place-button">
           find me a place
         </Link>
       </section>
@@ -44,31 +84,68 @@ function Landing() {
       <section className="signup-section">
         <div className="signup-container">
           <div className="signup-form">
-            <h2>Get Set Up!</h2>
-            <form>
+            <h2>{isLogin ? 'Welcome Back!' : 'Get Set Up!'}</h2>
+            <form onSubmit={handleSubmit}>
+              {/* {!isLogin && (
+                <div className="form-group">
+                  <input 
+                    type="text" 
+                    placeholder="Name" 
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+              )} */}
               <div className="form-group">
-                <input type="text" placeholder="Name" />
+                <input 
+                  type="email" 
+                  placeholder="Email address" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
               </div>
               <div className="form-group">
-                <input type="email" placeholder="Email address" />
+                <input 
+                  type="password" 
+                  placeholder="Password" 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
               </div>
-              <div className="form-group">
-                <input type="password" placeholder="Password" />
-              </div>
-              <div className="form-group checkbox">
-                <input type="checkbox" id="terms" />
-                <label htmlFor="terms">I agree to the terms & policy</label>
-              </div>
-              <button type="submit" className="signup-button">Signup</button>
+              {!isLogin && (
+                <div className="form-group checkbox">
+                  <input 
+                    type="checkbox" 
+                    id="terms" 
+                    checked={termsAccepted}
+                    onChange={(e) => setTermsAccepted(e.target.checked)}
+                  />
+                  <label htmlFor="terms">I agree to the terms & policy</label>
+                </div>
+              )}
+              {error && <div className="error-message">{error}</div>}
+              <button type="submit" className="signup-button">
+                {isLogin ? 'Log in' : 'Sign up'}
+              </button>
               <div className="divider">
                 <span>or</span>
               </div>
-              <button type="button" className="google-button">
+              <button 
+                type="button" 
+                className="google-button"
+                onClick={handleGoogleSignIn}
+              >
                 <img src="/google-icon.png" alt="Google" />
                 Sign in with Google
               </button>
               <p className="login-text">
-                Have an account? <Link to="/login">Log in</Link>
+                {isLogin ? (
+                  <>Don't have an account? <button type="button" onClick={() => setIsLogin(false)}>Sign up</button></>
+                ) : (
+                  <>Have an account? <button type="button" onClick={() => setIsLogin(true)}>Log in</button></>
+                )}
               </p>
             </form>
           </div>

@@ -385,6 +385,12 @@ const PlacesPage = () => {
     }
   };
 
+  const viewOnMaps = (place) => {
+    const { lat, lng } = place.geometry.location;
+    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place.place_id}`;
+    window.open(mapsUrl, '_blank');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -726,19 +732,28 @@ const PlacesPage = () => {
                         </div>
                       </div>
                     )}
-                    {/* Favorite Button */}
-                    <button
-                      onClick={() => toggleFavorite(place)}
-                      className={`mt-3 text-sm font-medium rounded px-3 py-1 ${
-                        favorites.includes(place.place_id)
-                          ? 'bg-yellow-300 text-yellow-900'
-                          : 'bg-gray-200 text-gray-700'
-                      }`}
-                    >
-                      {favorites.includes(place.place_id)
-                        ? '★ Favorited'
-                        : '☆ Add to Favorites'}
-                    </button>
+                    
+                    {/* Action Buttons */}
+                    <div className="mt-4 flex space-x-2">
+                      <button
+                        onClick={() => toggleFavorite(place)}
+                        className={`text-sm font-medium rounded px-3 py-1 ${
+                          favorites.includes(place.place_id)
+                            ? 'bg-yellow-300 text-yellow-900'
+                            : 'bg-gray-200 text-gray-700'
+                        }`}
+                      >
+                        {favorites.includes(place.place_id)
+                          ? '★ Favorited'
+                          : '☆ Add to Favorites'}
+                      </button>
+                      <button
+                        onClick={() => viewOnMaps(place)}
+                        className="text-sm font-medium rounded px-3 py-1 bg-blue-500 text-white hover:bg-blue-600"
+                      >
+                        View on Maps
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
