@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../firebase/firebase';
+import { Link } from 'react-router-dom';
 import {
   doc,
   setDoc,
@@ -394,7 +395,15 @@ const PlacesPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Find Your Perfect Workspace</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Find Your Perfect Workspace</h1>
+          <Link 
+            to="/profile" 
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Profile
+          </Link>
+        </div>
         
         {/* Preferences Form */}
         <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-8">
