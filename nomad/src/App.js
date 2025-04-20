@@ -14,8 +14,7 @@ import AuthForm from "./components/Auth/AuthForm";
 import PlacesResults from './components/Places/PlacesResults';
 import Landing from './screens/landing';
 import Locator from './screens/locator';
-import Profile from './screens/profile';
-import Quiz from './screens/quiz';
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -53,7 +52,6 @@ function App() {
           <Route path="/places/results" element={user ? <PlacesResults /> : <Navigate to="/auth" />} />
           <Route path="/profile" element={user ? <ProfilePage /> : <Navigate to="/auth" />} />
           <Route path="/locator" element={user ? <Locator /> : <Navigate to="/auth" />} />
-          <Route path="/quiz" element={user ? <Quiz /> : <Navigate to="/auth" />} />
         </Routes>
       </div>
     </Router>

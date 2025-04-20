@@ -3,28 +3,26 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => (
-  <div className="min-h-screen bg-gray-50 py-8">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg p-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">Welcome to Nomad</h1>
-        <div className="space-y-4">
-          <p className="text-gray-600">Find your perfect workspace:</p>
-          <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-            <Link
-              to="/places"
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Find Workspaces
-            </Link>
-            <Link
-              to="/profile"
-              className="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              View Profile
-            </Link>
-          </div>
-        </div>
-      </div>
+  <div style={{ width: '100%', height: '100vh', position: 'relative', background: 'radial-gradient(ellipse 50.00% 50.00% at 50.00% 50.00%, #A3CEDD 0%, #2A62C9 100%)', overflow: 'hidden' }}>
+    <div style={{ width: 748, height: 112, left: 346, top: 138, position: 'absolute', background: '#D9D9D9', boxShadow: '0px 11px 9.5px rgba(0, 0, 0, 0.25)', borderRadius: 45 }} />
+    
+    <div style={{ width: 400, height: 59, left: '50%', top: 156, position: 'absolute', transform: 'translateX(-50%)', color: 'black', fontSize: 36, fontFamily: 'Satoshi, sans-serif', fontWeight: '500', textAlign: 'center',}}>
+      Welcome To Nomad
+    </div>
+    
+    <div style={{ width: 202, height: 66, left: 449, top: 426, position: 'absolute', background: '#4274D0', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)', borderRadius: 55 }} />
+    <div style={{ width: 202, height: 64, left: 747, top: 427, position: 'absolute', background: '#F5ECEC', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)', borderRadius: 55 }} />
+    
+    <Link to="/places" style={{ width: 154, height: 33, left: 478, top: 444, position: 'absolute', color: 'white', fontSize: 20, fontFamily: 'Satoshi, sans-serif', fontWeight: '500', textDecoration: 'none' }}>
+      find workspaces
+    </Link>
+    
+    <Link to="/profile" style={{ width: 65, height: 28, left: 820, top: 444, position: 'absolute', color: '#4274D0', fontSize: 20, fontFamily: 'Satoshi, sans-serif', fontWeight: '500', textDecoration: 'none' }}>
+      profile
+    </Link>
+    
+    <div style={{ width: 300, height: 17, left: '50%', top: 207, position: 'absolute', transform: 'translateX(-50%)', color: '#5D5D5D', fontSize: 20, fontFamily: 'Satoshi, sans-serif', fontWeight: '500', textAlign: 'center'}}>
+      find your perfect workspace
     </div>
   </div>
 );

@@ -398,25 +398,29 @@ const PlacesPage = () => {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Find Your Perfect Workspace</h1>
           <Link 
-            to="/profile" 
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            to="../" 
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Profile
           </Link>
         </div>
         
         {/* Preferences Form */}
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-8">
-          <div className="px-4 py-5 sm:px-6">
-            <h2 className="text-lg leading-6 font-medium text-gray-900">Workspace Preferences</h2>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500">Fill in your preferences to find the ideal workspace</p>
-          </div>
-          
+        <div className="bg-gray-100 shadow overflow-hidden sm:rounded-lg mb-8">
+        <div className="px-4 py-5 sm:px-6 text-center">
+          <h2 className="text-lg leading-6 font-semibold text-gray-900">
+          Workspace Preferences
+          </h2>
+        <p className="mt-1 max-w-2xl mx-auto text-sm text-gray-500">
+          Fill in your preferences to find the ideal workspace
+        </p>  
+        </div>
+
           <form onSubmit={searchPlaces} className="px-4 py-5 sm:p-6">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               {/* Current Address */}
               <div className="col-span-2">
-                <label htmlFor="currentAddress" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="currentAddress" className="block text-sm font-medium justify-start text-gray-700">
                   Current Address
                 </label>
                 <input
