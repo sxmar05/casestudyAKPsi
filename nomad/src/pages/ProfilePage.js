@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../firebase/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Link } from 'react-router-dom';
 
@@ -42,6 +42,23 @@ const ProfilePage = () => {
 
     loadFavorites();
   }, [user]);
+
+  const toggleFavorite = async (place) => {
+    if (!user) return;
+    
+    try {
+      const docRef = doc(db, "favorites", `${user.uid}_${place.placeId}`);
+      await deleteDoc(docRef);
+      setFavorites(prev => prev.filter(fav => fav.placeId !== place.placeId));
+    } catch (err) {
+      setError("Failed to remove favorite: " + err.message);
+    }
+  };
+
+  const viewOnMaps = (place) => {
+    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${place.name} ${place.address}`;
+    window.open(mapsUrl, '_blank');
+  };
 
   if (loading) {
     return (
@@ -90,13 +107,13 @@ const ProfilePage = () => {
         
         <div className="bg-white shadow overflow-hidden sm:rounded-lg">
           <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">User Profile</h3>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500">Your personal information and favorite places</p>
+            <h3 className="text-lg leading-6 font-medium text-gray-900">Profile Information</h3>
+            <p className="mt-1 max-w-2xl text-sm text-gray-500">Your personal details and preferences.</p>
           </div>
           <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
             <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
               <div className="sm:col-span-1">
-                <dt className="text-sm font-medium text-gray-500">Email address</dt>
+                <dt className="text-sm font-medium text-gray-500">Email</dt>
                 <dd className="mt-1 text-sm text-gray-900">{user.email}</dd>
               </div>
             </dl>
@@ -128,6 +145,22 @@ const ProfilePage = () => {
                   <div className="p-6">
                     <h4 className="text-lg font-medium text-gray-900">{favorite.name}</h4>
                     <p className="mt-1 text-sm text-gray-500">{favorite.address}</p>
+                    
+                    {/* Action Buttons */}
+                    <div className="mt-4 flex space-x-2">
+                      <button
+                        onClick={() => toggleFavorite(favorite)}
+                        className="text-sm font-medium rounded px-3 py-1 bg-yellow-300 text-yellow-900"
+                      >
+                        ★ Remove Favorite
+                      </button>
+                      <button
+                        onClick={() => viewOnMaps(favorite)}
+                        className="text-sm font-medium rounded px-3 py-1 bg-blue-500 text-white hover:bg-blue-600"
+                      >
+                        View on Maps
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
