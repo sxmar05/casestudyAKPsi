@@ -393,52 +393,48 @@ const PlacesPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+<div className="min-h-screen bg-white py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Find Your Perfect Workspace</h1>
-          <Link 
-            to="/Profile" 
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Profile
-          </Link>
+    <div className="flex justify-between items-center mb-2">
+    <h1 className="text-3xl font-bold text-gray-900">Find Your Perfect Workspace</h1>
+  <Link 
+    to="/Profile" 
+    className="px-6 py-2 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600 transition-colors"
+  >
+    Profile
+  </Link>
+</div>
+<p className="text-gray-600 mb-8 text-left">Fill in your preferences to find the ideal workspace</p>
+    
+    {/* Preferences Form */}
+    <div className="mb-8">
+      <form onSubmit={searchPlaces}>
+        {/* Current Address */}
+        <div className="mb-6">
+          <label htmlFor="currentAddress" className="block text-sm font-medium text-gray-700 mb-1 text-left">
+            Current Address
+          </label>
+          <input
+            type="text"
+            name="currentAddress"
+            id="currentAddress"
+            value={formData.currentAddress}
+            onChange={handleInputChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter Your Address Here"
+            required
+          />
         </div>
         
-        {/* Preferences Form */}
-        <div className="bg-gray-100 shadow overflow-hidden sm:rounded-lg mb-8">
-        <div className="px-4 py-5 sm:px-6 text-center">
-          <h2 className="text-lg leading-6 font-semibold text-gray-900">
-          Workspace Preferences
-          </h2>
-        <p className="mt-1 max-w-2xl mx-auto text-sm text-gray-500">
-          Fill in your preferences to find the ideal workspace
-        </p>  
-        </div>
-
-          <form onSubmit={searchPlaces} className="px-4 py-5 sm:p-6">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {/* Current Address */}
-              <div className="col-span-2">
-                <label htmlFor="currentAddress" className="block text-sm font-medium justify-start text-gray-700">
-                  Current Address
-                </label>
-                <input
-                  type="text"
-                  name="currentAddress"
-                  id="currentAddress"
-                  value={formData.currentAddress}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  placeholder="Enter your address"
-                  required
-                />
-              </div>
-              
+        {/* Main preferences container with light blue background */}
+        <div className="bg-[#EDf5ff] p-6 rounded-lg mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Left Column */}
+            <div>
               {/* Max Commute Time */}
-              <div>
-                <label htmlFor="maxCommuteTime" className="block text-sm font-medium text-gray-700">
-                  Maximum Commute Time (minutes)
+              <div className="mb-6">
+                <label htmlFor="maxCommuteTime" className="block text-sm font-medium text-gray-700 mb-1 text-left">
+                  Max Commute Time (mins)
                 </label>
                 <input
                   type="number"
@@ -448,14 +444,116 @@ const PlacesPage = () => {
                   onChange={handleInputChange}
                   min="1"
                   max="120"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
               </div>
               
-              {/* Space Type */}
-              <div>
-                <label htmlFor="spaceType" className="block text-sm font-medium text-gray-700">
+              {/* Amenities */}
+              <div className="mb-6 bg-blue-100 p-4 rounded-md">
+                <label className="block text-sm font-medium text-gray-700 mb-2 text-left">
+                  Amenities
+                </label>
+                <div className="space-y-2">
+                  <div className="flex items-center">
+                    <input
+                      id="printers"
+                      name="printers"
+                      type="checkbox"
+                      checked={formData.amenities.printers}
+                      onChange={handleAmenityChange}
+                      className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                    <label htmlFor="printers" className="ml-2 text-sm text-gray-700">
+                      Printer
+                    </label>
+                  </div>
+                  <div className="flex items-center">
+                    <input
+                      id="coffee"
+                      name="coffee"
+                      type="checkbox"
+                      checked={formData.amenities.coffee}
+                      onChange={handleAmenityChange}
+                      className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                    <label htmlFor="coffee" className="ml-2 text-sm text-gray-700">
+                      Coffee
+                    </label>
+                  </div>
+                  <div className="flex items-center">
+                    <input
+                      id="wifi"
+                      name="wifi"
+                      type="checkbox"
+                      checked={formData.amenities.wifi}
+                      onChange={handleAmenityChange}
+                      className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                    <label htmlFor="wifi" className="ml-2 text-sm text-gray-700">
+                      WiFi
+                    </label>
+                  </div>
+                  <div className="flex items-center">
+                    <label htmlFor="other" className="text-sm text-gray-700 mr-2">
+                      Other:
+                    </label>
+                    <input
+                      type="text"
+                      name="other"
+                      id="other"
+                      value={formData.amenities.other}
+                      onChange={(e) => setFormData({
+                        ...formData,
+                        amenities: {
+                          ...formData.amenities,
+                          other: e.target.value
+                        }
+                      })}
+                      className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              {/* Work Days */}
+              <div className="mb-6 bg-blue-100 p-4 rounded-md">
+                <label className="block text-sm font-medium text-gray-700 mb-2 text-left">
+                  Work Days
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { day: 'Sunday', key: 'sunday' },
+                    { day: 'Monday', key: 'monday' },
+                    { day: 'Tuesday', key: 'tuesday' },
+                    { day: 'Wednesday', key: 'wednesday' },
+                    { day: 'Thursday', key: 'thursday' },
+                    { day: 'Friday', key: 'friday' },
+                    { day: 'Saturday', key: 'saturday' }
+                  ].map(({ day, key }) => (
+                    <div key={key} className="flex items-center">
+                      <input
+                        id={key}
+                        name={key}
+                        type="checkbox"
+                        checked={formData.workdays[key]}
+                        onChange={handleWorkdayChange}
+                        className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      />
+                      <label htmlFor={key} className="ml-2 text-sm text-gray-700">
+                        {day}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            {/* Right Column */}
+            <div>
+              {/* Preferred Workspace Type */}
+              <div className="mb-6">
+                <label htmlFor="spaceType" className="block text-sm font-medium text-gray-700 mb-1 text-left">
                   Preferred Workspace Type
                 </label>
                 <select
@@ -463,7 +561,7 @@ const PlacesPage = () => {
                   name="spaceType"
                   value={formData.spaceType}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="cafe">Cafe</option>
                   <option value="library">Library</option>
@@ -472,76 +570,9 @@ const PlacesPage = () => {
                 </select>
               </div>
               
-              {/* Amenities */}
-              <div className="col-span-2">
-                <fieldset>
-                  <legend className="block text-sm font-medium text-gray-700">Amenities</legend>
-                  <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                    <div className="flex items-center">
-                      <input
-                        id="printers"
-                        name="printers"
-                        type="checkbox"
-                        checked={formData.amenities.printers}
-                        onChange={handleAmenityChange}
-                        className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                      />
-                      <label htmlFor="printers" className="ml-2 text-sm text-gray-700">
-                        Printers
-                      </label>
-                    </div>
-                    <div className="flex items-center">
-                      <input
-                        id="coffee"
-                        name="coffee"
-                        type="checkbox"
-                        checked={formData.amenities.coffee}
-                        onChange={handleAmenityChange}
-                        className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                      />
-                      <label htmlFor="coffee" className="ml-2 text-sm text-gray-700">
-                        Coffee
-                      </label>
-                    </div>
-                    <div className="flex items-center">
-                      <input
-                        id="wifi"
-                        name="wifi"
-                        type="checkbox"
-                        checked={formData.amenities.wifi}
-                        onChange={handleAmenityChange}
-                        className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                      />
-                      <label htmlFor="wifi" className="ml-2 text-sm text-gray-700">
-                        WiFi
-                      </label>
-                    </div>
-                    <div className="flex items-center">
-                      <label htmlFor="other" className="text-sm text-gray-700 mr-2">
-                        Other:
-                      </label>
-                      <input
-                        type="text"
-                        name="other"
-                        id="other"
-                        value={formData.amenities.other}
-                        onChange={(e) => setFormData({
-                          ...formData,
-                          amenities: {
-                            ...formData.amenities,
-                            other: e.target.value
-                          }
-                        })}
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                  </div>
-                </fieldset>
-              </div>
-              
               {/* Paid Access */}
-              <div>
-                <label htmlFor="paidAccess" className="block text-sm font-medium text-gray-700">
+              <div className="mb-6">
+                <label htmlFor="paidAccess" className="block text-sm font-medium text-gray-700 mb-1 text-left">
                   Paid Access
                 </label>
                 <select
@@ -549,16 +580,16 @@ const PlacesPage = () => {
                   name="paidAccess"
                   value={formData.paidAccess}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="yes">Yes (willing to pay)</option>
-                  <option value="no">No (free access only)</option>
+                  <option value="no">No (Free Access Only)</option>
                 </select>
               </div>
               
-              {/* Noise Level */}
-              <div>
-                <label htmlFor="noiseLevel" className="block text-sm font-medium text-gray-700">
+              {/* Preferred Noise Level */}
+              <div className="mb-6">
+                <label htmlFor="noiseLevel" className="block text-sm font-medium text-gray-700 mb-1 text-left">
                   Preferred Noise Level
                 </label>
                 <select
@@ -566,7 +597,7 @@ const PlacesPage = () => {
                   name="noiseLevel"
                   value={formData.noiseLevel}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="quiet">Quiet</option>
                   <option value="moderate">Moderate</option>
@@ -574,9 +605,27 @@ const PlacesPage = () => {
                 </select>
               </div>
               
+              {/* Workspace Size */}
+              <div className="mb-6">
+                <label htmlFor="workspaceSize" className="block text-sm font-medium text-gray-700 mb-1 text-left">
+                  Preferred Workspace Size
+                </label>
+                <select
+                  id="workspaceSize"
+                  name="workspaceSize"
+                  value={formData.workspaceSize}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="small">Small (1-2 People)</option>
+                  <option value="medium">Medium (3-5 People)</option>
+                  <option value="large">Large (6+ People)</option>
+                </select>
+              </div>
+              
               {/* Food Options */}
-              <div>
-                <label htmlFor="foodOptions" className="block text-sm font-medium text-gray-700">
+              <div className="mb-6">
+                <label htmlFor="foodOptions" className="block text-sm font-medium text-gray-700 mb-1 text-left">
                   Food Options
                 </label>
                 <select
@@ -584,99 +633,65 @@ const PlacesPage = () => {
                   name="foodOptions"
                   value={formData.foodOptions}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="none">No food needed</option>
-                  <option value="some">Some options</option>
+                  <option value="some">Some Options</option>
                   <option value="many">Many options</option>
                 </select>
               </div>
               
-              {/* Workspace Size */}
-              <div>
-                <label htmlFor="workspaceSize" className="block text-sm font-medium text-gray-700">
-                  Workspace Size
-                </label>
-                <select
-                  id="workspaceSize"
-                  name="workspaceSize"
-                  value={formData.workspaceSize}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                >
-                  <option value="small">Small (1-2 people)</option>
-                  <option value="medium">Medium (3-5 people)</option>
-                  <option value="large">Large (6+ people)</option>
-                </select>
-              </div>
-              
-              {/* Workdays */}
-              <div className="col-span-2">
-                <fieldset>
-                  <legend className="block text-sm font-medium text-gray-700">Work Days</legend>
-                  <div className="mt-2 grid grid-cols-4 gap-2 sm:grid-cols-7">
-                    {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day) => (
-                      <div key={day} className="flex items-center">
-                        <input
-                          id={day.toLowerCase()}
-                          name={day.toLowerCase()}
-                          type="checkbox"
-                          checked={formData.workdays[day.toLowerCase()]}
-                          onChange={handleWorkdayChange}
-                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                        />
-                        <label htmlFor={day.toLowerCase()} className="ml-2 text-sm text-gray-700">
-                          {day}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </fieldset>
-              </div>
-              
               {/* Work Times */}
-              <div>
-                <label htmlFor="start" className="block text-sm font-medium text-gray-700">
-                  Work Start Time
-                </label>
-                <input
-                  type="time"
-                  name="start"
-                  id="start"
-                  value={formData.workTimes.start}
-                  onChange={handleTimeChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="end" className="block text-sm font-medium text-gray-700">
-                  Work End Time
-                </label>
-                <input
-                  type="time"
-                  name="end"
-                  id="end"
-                  value={formData.workTimes.end}
-                  onChange={handleTimeChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  required
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="mb-6">
+                  <label htmlFor="start" className="block text-sm font-medium text-gray-700 mb-1 text-left">
+                    Work Start Time
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="time"
+                      name="start"
+                      id="start"
+                      value={formData.workTimes.start}
+                      onChange={handleTimeChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+                </div>
+                
+                <div className="mb-6">
+                  <label htmlFor="end" className="block text-sm font-medium text-gray-700 mb-1 text-left">
+                    Work End Time
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="time"
+                      name="end"
+                      id="end"
+                      value={formData.workTimes.end}
+                      onChange={handleTimeChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-            
-            <div className="mt-6">
-              <button
-                type="submit"
-                disabled={!formData.currentAddress || loading || !mapsLoaded}
-                className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400"
-              >
-                {loading ? 'Searching...' : 'Find Workspaces'}
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
+        
+        <div className="mt-6">
+          <button
+            type="submit"
+            disabled={!formData.currentAddress || loading || !mapsLoaded}
+            className="w-full py-3 px-4 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300 transition-colors"
+          >
+            {loading ? 'Searching...' : 'Find Workspaces'}
+          </button>
+        </div>
+      </form>
+    </div>
 
         {/* Error Message - Only show after form submission */}
         {error && formSubmitted && (
@@ -693,7 +708,7 @@ const PlacesPage = () => {
         {/* Loading State */}
         {loading && (
           <div className="flex justify-center items-center my-8">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         )}
 
